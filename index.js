@@ -15,10 +15,22 @@ client.once("ready", () => {
 });
 
 // مثال command ping
-client.on("messageCreate", message => {
-  if (message.content === "ping") {
-    message.reply("pong 🏓");
+client.on("messageCreate", async message => {
+
+  if (message.author.bot) return;
+
+  // command +message
+  if (message.content.startsWith("+message")) {
+
+    const args = message.content.slice(8).trim();
+
+    if (!args) return;
+
+    await message.delete().catch(() => {});
+
+    await message.channel.send(args);
   }
+
 });
 
 // تشغيل Web Server باش Render ما يطيحوش
